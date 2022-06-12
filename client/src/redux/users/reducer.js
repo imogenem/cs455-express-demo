@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import {getUsersAsync} from './thunks';
 
 const INITIAL_STATE = {
   list: [
@@ -16,6 +17,11 @@ const usersSlice = createSlice({
       state.list.push(action.payload)
     }
   },
+  extraReducers: (builder) => {
+    builder.addCase(getUsersAsync.fulfilled, (state, action) => {
+      state.list = action.payload;
+    })
+  }
 });
 
 export const { addUser } = usersSlice.actions;
